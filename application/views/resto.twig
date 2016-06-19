@@ -1,0 +1,271 @@
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>订食巴黎</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    
+    <link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
+    <link rel="stylesheet" href="//g.alicdn.com/msui/sm/0.6.2/css/sm-extend.min.css">
+    <link rel="stylesheet" href="{{ constant('BASE_URL') }}/assets/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{{ constant('BASE_URL') }}/assets/css/resto.css">
+
+  </head>
+  <body>
+
+  <div class="page-group">
+      <!-- 你的html代码 -->
+      <div class="page">
+            <nav class="bar bar-tab">
+                <a class="tab-item external edit-review" href="#">
+                    <i class="fa fa-edit" aria-hidden="true"></i>
+                    <span class="tab-label">写评论</span>
+                </a>
+                {% if resto.tel is not empty %}
+                    {% if resto.tel|length == 1%}
+                    <a class="tab-item external confirm-call" href="tel:{{ resto.tel[0] }}">
+                    {% elseif resto.tel|length > 1%}    
+                    <a class="tab-item external open-vertical-modal confirm-call" href="#">
+                    {% endif %}
+                    <i class="fa fa-phone" aria-hidden="true"></i>
+                    <span class="tab-label">电话</span>
+                </a>
+                {% endif %}
+                {% if resto.wechat is not empty %}
+                <a class="tab-item external confirm-wechat" id="confirm-wechat" href="#">
+                    <i class="fa fa-wechat" aria-hidden="true"></i>
+                    <span class="tab-label">微信</span>
+                </a>
+                {% endif %}
+            </nav>
+            <div class="content">
+                <input type="hidden" id="resto-id" name="resto-id" value="{{ resto.id }}">
+                <input type="hidden" id="user-id" name="user-id" value="{{ user_id }}">
+                <!-- 这里是页面内容区 -->
+                <div class="page-index">
+                    <div class="card">
+                        <div align="bottom" class="card-header color-white row">
+                            <div class="col-20 bloc-img">
+                                {% if resto.profil_pic is not empty %}
+                                <img class="img-circle" src="{{ constant('BASE_URL') }}/assets/img/restos/{{ resto.profil_pic }}">
+                                {% else %}
+                                <img class="img-circle" src="{{ constant('BASE_URL') }}/assets/img/restos/default.png">
+                                {% endif %}
+                            </div>
+                            <h3 class="col-80">{{ resto.name }}</h3>
+                        </div>
+                        <div class="card-content">
+                            <div class="card-content-inner">
+                                {% if resto.info1 is not empty %}
+                                    <span class="button button-fill"><span class="fa fa-tag" aria-hidden="true"></span> {{ resto.info1 }}</span>
+                                {% endif %}
+                                {% if resto.info2 is not empty %}
+                                    <span class="button button-fill"><span class="fa fa-tag" aria-hidden="true"></span> {{ resto.info2 }}</span>
+                                {% endif %}
+                                {% if resto.info3 is not empty %}
+                                    <span class="button button-fill"><span class="fa fa-tag" aria-hidden="true"></span> {{ resto.info3 }}</span>
+                                {% endif %}
+                                {% if resto.info4 is not empty %}
+                                    <span class="button button-fill"><span class="fa fa-tag" aria-hidden="true"></span> {{ resto.info4 }}</span>
+                                {% endif %}
+                                <p>{{ resto.presentation }}</p>
+                            </div>
+                        </div>
+
+                        <div class="content-padded grid-pic">
+                            <div class="row">
+                                {% if resto.menu_pics[0] is not empty %}
+                                    {% set j = 0 %}
+                                    {% for menu_pic in resto.menu_pics %}
+                                        <a href="#" class="col-33 thumbnail menu-popup" data-index="{{ j }}">
+                                            <img class="img-thumbnail" src="{{ constant('BASE_URL') }}/assets/img/menus/{{ menu_pic }}" alt="...">
+                                        </a>
+                                    {% set j = j + 1 %}
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="buttons-tab fixed-tab">
+                        <a href="#tab1" class="tab-link active button">特色菜</a>
+                        <a href="#tab2" class="tab-link button">评论</a>
+                    </div>
+                    <div class="card">
+                        
+                        <div class="tabs">
+                            <div id="tab1" class="tab active">
+                                <div class="content-block">
+                                    <div class="list-block media-list">
+                                        {% if resto.foods != false %}
+                                        <ul>
+                                            {% set i = 0 %}
+                                            {% for food in resto.foods %}
+                                                <li class="item-content">
+                                                    <div class="item-media">
+                                                        <a href="#" data-popup=".popup-pic-food" class="food-popup" data-index="{{ i }}">
+                                                        {% if food.pic is empty %}
+                                                            <img class="img-food" src="{{ constant('BASE_URL') }}/assets/img/foods/default.png" width="40">
+                                                        {% else %}
+                                                            <img class="img-food" src="{{ constant('BASE_URL') }}/assets/img/foods/{{ food.pic }}">
+                                                        {% endif %}
+                                                        </a>
+                                                    </div>
+                                                    <div class="item-inner">
+                                                        <div class="item-title-row">
+                                                            <div class="item-title">{{ food.name }}</div>
+                                                            {% if food.liked == false %}
+                                                            <span style="float:right">
+                                                                <a href="#" id="do-like-food-{{ food.id }}" class="do-like-food" data-food="{{ food.id }}" data-like="0">
+                                                                    <span class="fa fa-thumbs-o-up" aria-hidden="true" >
+                                                                        <span id="food-likes-{{ food.id }}" class="cpt-likes">{% if food.likes != 0%}{{ food.likes }}{% endif %}</span> 
+                                                                    </span>
+                                                                </a>
+                                                            </span>
+                                                            {% else %}
+                                                            <span style="float:right">
+                                                                <span class="fa fa-thumbs-up" aria-hidden="true" >
+                                                                     <span class="cpt-likes">{% if food.likes != 0%}{{ food.likes }}{% endif %}</span> 
+                                                                </span>
+                                                            </span>
+                                                            {% endif %}
+                                                        </div>
+                                                        <div class="list-text">{{ food.price }}</div>
+                                                    </div>
+                                                </li>
+                                                {% set i = i + 1 %}
+                                            {% endfor %}
+                                        {% else %}
+                                        <li class="item-content">
+                                            暂无特色菜实物图，努力添加中
+                                        </li>
+                                        {% endif %}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="tab2" class="tab">
+                                <div class="content-block" data-distance="100">
+                                    <div class="list-block media-list">
+                                        <ul id="list-reviews">
+                                        {% if resto.reviews != false %}
+                                            {% for review in resto.reviews %}
+                                                <li class="item-content">
+                                                    <div class="item-media">
+                                                        {% if review.pic is empty %}
+                                                            <img class="img-review img-circle" src="{{ constant('BASE_URL') }}/assets/img/profils/default.png" width="40">
+                                                        {% else %}
+                                                            <img class="img-review img-circle" src="{{ constant('BASE_URL') }}/assets/img/profils/{{ review.pic }}" width="40">
+                                                        {% endif %}
+                                                    </div>
+                                                    <div class="item-inner">
+                                                        <div class="item-title-row">
+                                                            <div class="item-title">{{ review.username }}</div>
+                                                            {% if review.liked == false %}
+                                                            <span style="float:right">
+                                                                <a href="#" id="do-like-review-{{ review.id }}" class="do-like-review" data-review="{{ review.id }}" data-like="0">
+                                                                    <span class="fa fa-thumbs-o-up" aria-hidden="true" >
+                                                                        <span id="review-likes-{{ review.id }}" class="cpt-likes">{% if review.likes != 0%}{{ review.likes }}{% endif %}</span> 
+                                                                    </span>
+                                                                </a>
+                                                            </span>
+                                                            {% else %}
+                                                            <span style="float:right">
+                                                                <span class="fa fa-thumbs-up" aria-hidden="true" >
+                                                                    <span id="review-likes-{{ review.id }}" class="cpt-likes">{% if review.likes != 0%}{{ review.likes }}{% endif %}</span> 
+                                                                </span>
+                                                            </span>
+                                                            {% endif %}
+                                                        </div>
+                                                        <div class="list-text">{{ review.text }}</div>
+                                                        <div class="list-text color-gray">{{ review.created|date("Y-m-d") }}</div>
+                                                    </div>
+                                                </li>
+                                            {% endfor %}
+                                        {% else %}
+                                        <li class="item-content">
+                                            <p class="no-review">暂无评论， 不如来抢个沙发吧</p>
+                                        </li>
+                                        {% endif %}
+                                        </ul>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+              </div>
+          </div>
+      </div>
+  </div>
+      
+    <!-- 评论popup -->
+    <div class="popup popup-edit-review">
+        <div class="content-block">
+          <header class="bar bar-nav">
+            <a class="icon icon-left pull-left photo-browser-close-link close-popup"></a>
+            <h1 class='title'>写评论</h1>
+          </header>
+          <div class="content">
+            
+            <div class="list-block">
+              <ul>
+                <!-- Text inputs -->
+                <li>
+                  <div class="item-content">
+                    <div class="item-media"><i class="icon icon-form-name"></i></div>
+                    <div class="item-inner">
+                      <div class="item-title label">用户名(随机)</div>
+                      <div class="item-input">
+                        <input type="text" id="username" value="{{ username }}">
+                      </div>
+                    </div>
+                  </div>
+                </li>
+                <li class="align-top">
+                  <div class="item-content">
+                    <div class="item-media"><i class="icon icon-form-comment"></i></div>
+                    <div class="item-inner">
+                      <div class="item-title label">评论</div>
+                      <div class="item-input">
+                          <textarea id="text"></textarea>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="content-block">
+              <div class="row">
+                <div class="col-50"><a href="#" class="button button-big button-fill button-danger close-popup">取消</a></div>
+                <div class="col-50"><a href="#" id="valide-review" class="button button-big button-fill button-success">确认</a></div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+    
+    
+    <script>
+        var arrayMenus = {{ resto.menu_pics|json_encode(constant('JSON_PRETTY_PRINT'))|raw }};
+        var arrayTels = {{ resto.tel|json_encode(constant('JSON_PRETTY_PRINT'))|raw }};
+        var foods = {{ resto.foods|json_encode(constant('JSON_PRETTY_PRINT'))|raw }};
+        var wechatQR = {{ resto.wechat|json_encode(constant('JSON_PRETTY_PRINT'))|raw }};
+        var baseUrl = "{{ constant('BASE_URL') }}";
+        var haveReview = "{{ resto.haveReview }}";
+    </script>
+    
+    <script type='text/javascript' src='//g.alicdn.com/sj/lib/zepto/zepto.min.js' charset='utf-8'></script>
+    <script type='text/javascript' src='//g.alicdn.com/msui/sm/0.6.2/js/sm.min.js' charset='utf-8'></script>
+<!--    <script type='text/javascript' src='//g.alicdn.com/msui/sm/0.6.2/js/sm-extend.min.js' charset='utf-8'></script>
+    <script type='text/javascript' src='{{ constant('BASE_URL') }}/assets/js/zepto.min.js' charset='utf-8'></script>
+    <script type='text/javascript' src='{{ constant('BASE_URL') }}/assets/js/sm.min.js' charset='utf-8'></script>-->
+    <script type='text/javascript' src='{{ constant('BASE_URL') }}/assets/js/sm-extend.min.js' charset='utf-8'></script>
+    <script type='text/javascript' src='{{ constant('BASE_URL') }}/assets/js/resto.js' charset='utf-8'></script>
+
+  </body>
+</html>

@@ -7,7 +7,7 @@ if (!defined('BASEPATH'))
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
+require 'vendor/autoload.php';
 /**
  * Description of BaseController
  *
@@ -16,12 +16,13 @@ if (!defined('BASEPATH'))
 class BaseController extends CI_Controller {
 
   private $pageData = array();
-
+  
   //put your code here
   public function __construct() {
     parent::__construct();
+    $this->load->library('twig');
   }
-
+  
   protected function addData($key, $value) {
     $this->pageData[$key] = $value;
   }
