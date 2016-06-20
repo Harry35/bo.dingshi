@@ -13,7 +13,7 @@ require 'vendor/autoload.php';
  *
  * @author d.liu
  */
-class BaseController extends CI_Controller {
+class MY_Controller extends CI_Controller {
 
   private $pageData = array();
   
