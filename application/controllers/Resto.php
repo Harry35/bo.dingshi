@@ -24,7 +24,10 @@ class Resto extends MY_Controller {
 
     public function edit($restoId) 
     {
-        $this->twig->display('edit_resto');
+        $resto = $this->resto_model->findRestoById($restoId); 
+        $this->twig->display('editResto', [
+            'resto'     => $resto
+        ]);
     }
 
 }
