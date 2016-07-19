@@ -1,103 +1,107 @@
-<a href="/les-defis"><span class="glyphicon glyphicon-arrow-left"></span> 返回</a>
-<div class="panel panel-default">
-    <div class="panel-heading"><strong>创建新外卖店家</strong></div>
-    <div class="panel-body">
-        <form class="form-horizontal" role="form" method="POST" action="/challenges/addChallengeForm" enctype="multipart/form-data">
-            <div class="form-group">
-                <label for="type" class="col-sm-2 control-label">状态 :</label>
-                <div class="col-sm-8">
-                    <select name="status"  class="form-control" >
-                        <option value="0">下线</option>
-                        <option value="1">上线</option>
-                    </select>
+{% extends "layout.twig" %}
+
+{% block content %}
+    <a href="{{ base_url() }}"><span class="glyphicon glyphicon-arrow-left"></span> 返回</a>
+    <div class="panel panel-default">
+        <div class="panel-heading"><strong>创建新外卖店家</strong></div>
+        <div class="panel-body">
+            <form class="form-horizontal" role="form" method="POST" action="{{ base_url() }}resto/addRestoForm" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="type" class="col-sm-2 control-label">状态 :</label>
+                    <div class="col-sm-8">
+                        <select name="status"  class="form-control" >
+                            <option value="0">下线</option>
+                            <option value="1">上线</option>
+                        </select>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-2 control-label">名字* :</label>
-                <div class="col-sm-8">
-                    <input type="text" class="form-control" name="name" value="" required>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">名字* :</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" name="name" value="" required>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-2 control-label">头像 :</label>
-                <div class="col-sm-8">
-                    <input type="file" name="picture_home" id="picture">
-                    <input type="hidden" id="picOrignal" value="" >
-                    <p id="error-message-picture" class="text-danger"></p>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">头像 :</label>
+                    <div class="col-sm-8">
+                        <input type="file" name="picture_home" id="picture">
+                        <input type="hidden" id="picOrignal" value="" >
+                        <p id="error-message-picture" class="text-danger"></p>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-2 control-label">菜单照片(最多6张) :</label>
-                <div class="col-sm-8">
-                    <input type="file" name="picture_animation" id="picture">
-                    <input type="hidden" id="picOrignal" value="" >
-                    <p id="error-message-picture" class="text-danger"></p>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">菜单照片(最多6张) :</label>
+                    <div class="col-sm-8">
+                        <input type="file" name="picture_animation" id="picture">
+                        <input type="hidden" id="picOrignal" value="" >
+                        <p id="error-message-picture" class="text-danger"></p>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-2 control-label">微信二维码 :</label>
-                <div class="col-sm-8">
-                    <input type="file" name="picture_animation" id="picture">
-                    <input type="hidden" id="picOrignal" value="" >
-                    <p id="error-message-picture" class="text-danger"></p>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">微信二维码 :</label>
+                    <div class="col-sm-8">
+                        <input type="file" name="picture_animation" id="picture">
+                        <input type="hidden" id="picOrignal" value="" >
+                        <p id="error-message-picture" class="text-danger"></p>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-2 control-label">电话号码1* :</label>
-                <div class="col-sm-8">
-                    <input type="text" class="form-control" maxlength="10" name="color_home" required>
-                    <p class="text-info">例 : "0688888888", 可添加3个电话号码</p>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">电话号码1* :</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" maxlength="10" name="color_home" required>
+                        <p class="text-info">例 : "0688888888", 可添加3个电话号码</p>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-2 control-label">电话号码2 :</label>
-                <div class="col-sm-8">
-                    <input type="text" class="form-control" maxlength="10" id="pickColor" name="color_home" required>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">电话号码2 :</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" maxlength="10" id="pickColor" name="color_home" required>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-2 control-label">电话号码3 :</label>
-                <div class="col-sm-8">
-                    <input type="text" class="form-control" maxlength="10" id="pickColor" name="color_home" required>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">电话号码3 :</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" maxlength="10" id="pickColor" name="color_home" required>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-2 control-label">标签1 :</label>
-                <div class="col-sm-8">
-                    <input type="text" class="form-control" maxlength="7" id="pickColor" name="color_home" required>
-                    <p class="text-info">例 : "标签1: 小巴黎20欧起送货, 标签2: 提前一天预定, 标签3: ......", 可添加4个标签</p>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">标签1 :</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" maxlength="7" id="pickColor" name="color_home" required>
+                        <p class="text-info">例 : "标签1: 小巴黎20欧起送货, 标签2: 提前一天预定, 标签3: ......", 可添加4个标签</p>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-2 control-label">标签2 :</label>
-                <div class="col-sm-8">
-                    <input type="text" class="form-control" maxlength="7" id="pickColor" name="color_home" required>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">标签2 :</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" maxlength="7" id="pickColor" name="color_home" required>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-2 control-label">标签3 :</label>
-                <div class="col-sm-8">
-                    <input type="text" class="form-control" maxlength="7" id="pickColor" name="color_home" required>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">标签3 :</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" maxlength="7" id="pickColor" name="color_home" required>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-2 control-label">标签4 :</label>
-                <div class="col-sm-8">
-                    <input type="text" class="form-control" maxlength="7" id="pickColor" name="color_home" required>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">标签4 :</label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" maxlength="7" id="pickColor" name="color_home" required>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-2 control-label">店家介绍* :</label>
-                <div class="col-sm-8">
-                    <textarea name="how_participate" rows="10" ></textarea>
-                    <p id="error-message-conclusion" class="text-danger"></p>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">店家介绍* :</label>
+                    <div class="col-sm-8">
+                        <textarea name="how_participate" rows="10" ></textarea>
+                        <p id="error-message-conclusion" class="text-danger"></p>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
-                    <button type="submit" class="btn btn-success">确认</button>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-success">确认</button>
+                    </div>
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
-</div>
+{% endblock %}

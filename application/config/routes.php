@@ -53,4 +53,9 @@ $route['default_controller'] = 'resto/restos';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
+$route['restos'] = 'resto/restos';
+$route['resto/add'] = 'resto/add';
 $route['resto/(:num)/edit'] = 'resto/edit/$1';
+$route['resto/(:num)/foods'] = 'resto/foods/$1';
+$route['resto/(:num)/food/add'] = 'resto/addFood/$1';
+$route['resto/(:num)/food/(:num)/edit'] = 'resto/editFood/$1/$2';

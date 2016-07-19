@@ -2,11 +2,11 @@
 
 {% block content %}
 
-<a href="/les-defis"><span class="glyphicon glyphicon-arrow-left"></span> 返回</a>
+<a href="{{ base_url() }}"><span class="glyphicon glyphicon-arrow-left"></span> 返回</a>
 <div class="panel panel-default">
     <div class="panel-heading"><strong>创建新外卖店家</strong></div>
     <div class="panel-body">
-        <form class="form-horizontal" role="form" method="POST" action="/challenges/addChallengeForm" enctype="multipart/form-data">
+        <form class="form-horizontal" role="form" method="POST" action="/resto/editRestoForm" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="type" class="col-sm-2 control-label">状态 :</label>
                 <div class="col-sm-8">

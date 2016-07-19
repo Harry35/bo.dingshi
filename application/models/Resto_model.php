@@ -125,6 +125,26 @@ class Resto_model extends MY_Model {
 
     return $foods;
   }
+  
+  /**
+   * 
+   * @param int    $id
+   * 
+   * @return array|boolean
+   */
+  public function findFoodByFoodId($id) {
+    $this->db->select('*');
+    $this->db->from('resto_food');
+    $this->db->where('id', $id);
+    $query = $this->db->get();
+    $food = $query->row_array();
+
+    if (empty($food)) {
+      return false;
+    }
+    
+    return $food;
+  }
 
   /**
    * 
